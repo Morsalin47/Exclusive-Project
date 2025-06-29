@@ -1,16 +1,8 @@
-import Home from "./pages/Home"
 import {
-  createBrowserRouter,
   RouterProvider,
 } from "react-router";
+import router from "./components/Routes/Routes";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  
-])
 function App() {
 
   return (
