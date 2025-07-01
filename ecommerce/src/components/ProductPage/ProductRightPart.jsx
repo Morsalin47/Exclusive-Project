@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { FaStar } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 import ProductRating from './ProductRating';
+import { Link } from 'react-router';
 
 const ProductRightPart = () => {
 
@@ -30,7 +30,7 @@ const ProductRightPart = () => {
             <div className='flex flex-wrap gap-x-8'>
                 {
                     currentProducts.map((product) => (
-                        <div className='flex justify-between'>
+                        <Link to ={`/product/${product.id}`} className='flex justify-between'>
                             <div className='relative w-[270px] mt-5 mb-10'>
                                 <div className='absolute top-1 right-1 z-20'>
                                     <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
@@ -57,7 +57,7 @@ const ProductRightPart = () => {
                                 </div>
                             </div>
 
-                        </div>
+                        </Link>
                     ))
                 }
 
