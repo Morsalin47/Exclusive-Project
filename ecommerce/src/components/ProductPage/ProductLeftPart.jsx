@@ -45,15 +45,15 @@ const ProductLeftPart = () => {
             <div>
                 <div className='flex items-center gap-2 mb-4'>
                     <div className='w-[11px] h-[11px] rounded-full bg-black'></div>
-                    <p className='font-primary text-[#767676] leading-8'>Colour 1</p>
+                    <p className='font-primary text-[#767676] leading-8 cursor-pointer'>Colour 1</p>
                 </div>
                 <div className='flex items-center gap-2 mb-4'>
                     <div className='w-[11px] h-[11px] rounded-full bg-[#FF0000]'></div>
-                    <p className='font-primary text-[#767676] leading-8'>Colour 2</p>
+                    <p className='font-primary text-[#767676] leading-8 cursor-pointer'>Colour 2</p>
                 </div>
                 <div className='flex items-center gap-2 mb-4'>
                     <div className='w-[11px] h-[11px] rounded-full bg-[#00FF38]'></div>
-                    <p className='font-primary text-[#767676] leading-8'>Colour 3</p>
+                    <p className='font-primary text-[#767676] leading-8 cursor-pointer'>Colour 3</p>
                 </div>
             </div>
 

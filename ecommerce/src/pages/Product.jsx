@@ -8,10 +8,10 @@ const Product = () => {
     <div>
         <Container>
             <div className='py-30 flex'>
-                <div className='w-[30%]'>
+                <div className='w-[25%]'>
                     <ProductLeftPart />
                 </div>
-                <div className='w-[70%]'>
+                <div className='w-[75%]'>
                     <ProductRightPart />
                 </div>
             </div>

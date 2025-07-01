@@ -7,6 +7,8 @@ import ProductRating from './ProductRating';
 const ProductRightPart = () => {
 
     const [productData, setProductData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productPerPage = 6;
 
     useEffect(() => {
         fetch("https://dummyjson.com/products")
@@ -14,11 +16,20 @@ const ProductRightPart = () => {
             .then((data) => setProductData(data.products))
     }, [])
 
+    const totalProducts = productData.length;
+    const totalPages = Math.ceil(totalProducts / productPerPage);
+    const indexOfLastProduct = currentPage * productPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+
+    const currentProducts = productData.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const data = [...Array(totalPages).keys()].map((index) => index + 1);
+
     return (
         <div>
-            <div className='flex flex-wrap justify-between'>
+            <div className='flex flex-wrap gap-x-8'>
                 {
-                    productData.map((product) => (
+                    currentProducts.map((product) => (
                         <div className='flex justify-between'>
                             <div className='relative w-[270px] mt-5 mb-10'>
                                 <div className='absolute top-1 right-1 z-20'>
@@ -49,6 +60,16 @@ const ProductRightPart = () => {
                         </div>
                     ))
                 }
+
+                <div className='flex gap-4 cursor-pointer'>
+                    {
+                        data.map((item) => (
+                            <div className={`px-4 py-2 rounded ${currentPage === item ? "bg-black text-white" : "bg-gray-400 text-black"}`} onClick={() => setCurrentPage(item)}>
+                                {item}
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </div>
     )
