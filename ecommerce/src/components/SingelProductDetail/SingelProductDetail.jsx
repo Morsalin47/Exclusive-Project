@@ -1,19 +1,24 @@
 import React, { use, useEffect, useState } from 'react'
 import Container from '../Layout/Container'
-import Main from '../../assets/main.png'
-import Left1 from '../../assets/l1.png'
-import Left2 from '../../assets/l2.png'
-import Left3 from '../../assets/l3.png'
-import Left4 from '../../assets/l4.png'
 import Banefit1 from '../../assets/banefit1.png'
 import Banefit2 from '../../assets/banefit2.png'
 import { CiHeart } from "react-icons/ci";
 import { useParams } from 'react-router'
+import SingleProductRating from './SingelProductRating';
 
 const SingelProductDetail = () => {
 
+
     const { id } = useParams();
     const [productData, setProductData] = useState([]);
+    const singleProduct = productData.find((product) => product.id == id);
+    const [selectedImg, setSelectedImg] = useState();
+
+    useEffect(() => {
+        if (singleProduct?.thumbnail) {
+            setSelectedImg(singleProduct?.thumbnail);
+        }
+    }, [singleProduct]);
 
     useEffect(() => {
         fetch("https://dummyjson.com/products")
@@ -49,7 +54,6 @@ const SingelProductDetail = () => {
         }
     ]
 
-    // border-[3px] border-[#000000]
 
     return (
         <div className='py-30'>
@@ -57,28 +61,29 @@ const SingelProductDetail = () => {
                 <div className='flex'>
                     <div className='w-[15%] mr-[15px] '>
                         <div className='flex flex-col gap-y-4'>
-                            <div className='bg-[#F5F5F5] rounded px-6 py-4'>
-                                <img src={Left1} alt="" />
-                            </div>
-                            <div className='bg-[#F5F5F5] rounded px-6 py-4'>
-                                <img src={Left2} alt="" />
-                            </div>
-                            <div className='bg-[#F5F5F5] rounded px-6 py-4'>
-                                <img src={Left3} alt="" />
-                            </div>
-                            <div className='bg-[#F5F5F5] rounded px-6 py-4'>
-                                <img src={Left4} alt="" />
-                            </div>
+                            {singleProduct?.images.map((img) => (
+                                <div className="py-4 px-6 bg-[#F5F5F5] rounded flex justify-center items-center cursor-pointer">
+                                    <img onClick={() => setSelectedImg(img)} src={img} alt="" />
+                                </div>
+                            ))}
                         </div>
                     </div>
                     <div className='w-[40%]'>
-                        <div className='bg-[#F5F5F5] rounded px-6 pt-[154px] pb-[131px]'>
-                            <img src={Main} alt="" />
+                        <div className='bg-[#F5F5F5] rounded px-[65px] py-[52px] pt-[190px] pb-[187px]'>
+                            <img className="w-[300px]" src={selectedImg} alt="" />
                         </div>
                     </div>
                     <div className='w-[45%]'>
                         <div className='ml-18'>
                             <h2 className='font-secondary font-semibold text-xl leading-6 mb-4'>{SingelProduct?.title}</h2>
+                            <div className="flex text-center items-center my-4">
+                                <SingleProductRating rating={singleProduct?.rating} />
+                                <p className="ml-2 font-primary text-[14px] leading-[21px] text-[#808080]">{`(${singleProduct?.reviews.length} Reviews)`}</p>
+                                <p className="px-4 text-[#808080]">|</p>
+                                <p className="font-primary text-[14px] leading-[21px] text-[#00FF66]">
+                                    In Stock
+                                </p>
+                            </div>
                             <p className='font-secondary text-xl leading-6 mb-6'>${SingelProduct?.price}</p>
                             <p className='font-primary leading-5 pb-6 border-b-[2px] border-[#000000]'>{SingelProduct?.description}</p>
                             <div className='flex items-center gap-x-2 mt-6'>
@@ -93,7 +98,7 @@ const SingelProductDetail = () => {
                                 </div>
                             </div>
                             <div className='flex items-center gap-x-2 mt-20'>
-                                <button className='font-primary font-medium text-[16px] leading-6 bg-primary px-12 py-2.5 text-white cursor-pointer'>Add to Cart</button>
+                                <button className='font-primary font-medium text-[16px] rounded leading-6 bg-primary px-12 py-2.5 text-white cursor-pointer'>Add to Cart</button>
                                 <div className='rounded w-10 h-10 border-[2px] border-[#D9D9D9] ml-4 flex items-center justify-center'>
                                     <CiHeart size={30} className='text-[#000000]  cursor-pointer' />
                                 </div>

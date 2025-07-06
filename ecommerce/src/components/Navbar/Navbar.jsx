@@ -41,7 +41,9 @@ const Navbar = () => {
                             <CiSearch size={24} className='absolute top-[7px] right-[12px] font-bold' />
                         </div>
                         <CiHeart size={24} />
-                        <IoCartOutline size={24} />
+                        <Link to="/cart">
+                            <IoCartOutline size={24} />
+                        </Link>
                         <GoPerson size={24} />
 
                     </div>
