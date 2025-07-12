@@ -5,6 +5,8 @@ import Banefit2 from '../../assets/banefit2.png'
 import { CiHeart } from "react-icons/ci";
 import { useParams } from 'react-router'
 import SingleProductRating from './SingelProductRating';
+import { useDispatch } from 'react-redux';
+import { cartTotal } from '../../slices/cartSlice';
 
 const SingelProductDetail = () => {
 
@@ -13,6 +15,7 @@ const SingelProductDetail = () => {
     const [productData, setProductData] = useState([]);
     const singleProduct = productData.find((product) => product.id == id);
     const [selectedImg, setSelectedImg] = useState();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (singleProduct?.thumbnail) {
@@ -54,6 +57,10 @@ const SingelProductDetail = () => {
         }
     ]
 
+    const handelAddToCart = (product) => {
+        dispatch(cartTotal(product));
+        
+    }
 
     return (
         <div className='py-30'>
@@ -98,7 +105,7 @@ const SingelProductDetail = () => {
                                 </div>
                             </div>
                             <div className='flex items-center gap-x-2 mt-20'>
-                                <button className='font-primary font-medium text-[16px] rounded leading-6 bg-primary px-12 py-2.5 text-white cursor-pointer'>Add to Cart</button>
+                                <button onClick={() => handelAddToCart(singleProduct)} className='font-primary font-medium text-[16px] rounded leading-6 bg-primary px-12 py-2.5 text-white cursor-pointer'>Add to Cart</button>
                                 <div className='rounded w-10 h-10 border-[2px] border-[#D9D9D9] ml-4 flex items-center justify-center'>
                                     <CiHeart size={30} className='text-[#000000]  cursor-pointer' />
                                 </div>
