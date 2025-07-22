@@ -7,6 +7,7 @@ import { useParams } from 'react-router'
 import SingleProductRating from './SingelProductRating';
 import { useDispatch } from 'react-redux';
 import { cartTotal } from '../../slices/cartSlice';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const SingelProductDetail = () => {
 
@@ -59,11 +60,26 @@ const SingelProductDetail = () => {
 
     const handelAddToCart = (product) => {
         dispatch(cartTotal(product));
-        
+        toast.success('ADDED TO CART')
+
     }
 
     return (
         <div className='py-30'>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce}
+
+            />
             <Container>
                 <div className='flex'>
                     <div className='w-[15%] mr-[15px] '>
