@@ -5,32 +5,22 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { Link, useNavigate } from 'react-router';
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-
-const provider = new GoogleAuthProvider();
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 
 
-const Signup = () => {
+const Login = () => {
 
     const auth = getAuth();
     const navigate = useNavigate();
 
-    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [nameError, setNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
     const [show, setShow] = useState(false);
-
-    const handleName = (e) => {
-        setName(e.target.value);
-        setNameError("");
-    }
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -44,9 +34,6 @@ const Signup = () => {
     }
 
     const handleCreateAccaount = () => {
-        if (!name) {
-            setNameError("**Please enter your name**");
-        }
         if (!email) {
             setEmailError("**Please enter your email**");
         } else {
@@ -69,43 +56,20 @@ const Signup = () => {
                 setPasswordError("**Password must be at least 8 characters long**");
             }
         }
-        if (name && email && password) {
-            createUserWithEmailAndPassword(auth, email, password)
+        if (email && password) {
+            signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    sendEmailVerification(auth.currentUser)
+                    toast.success("Successfully Logged in!");
 
-                    toast.success("Account successfully created!");
-
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 2000);
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                 });
-
+            setEmail("")
+            setPassword("")
         }
-
-    }
-
-    const handleGoogleSignUp = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                toast.success("Successfully Signed up with Google!");
-                setTimeout(() => {
-                    navigate('/login');
-                }, 2000);
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.customData.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            });
     }
 
 
@@ -129,17 +93,9 @@ const Signup = () => {
                 <img className='mt-15 mb-35' src={signup} alt="" />
             </div>
             <div className='ml-[129px] mt-[186px] mb-[265px]'>
-                <h1 className='font-secondary text-[36px] font-medium leading-7.5 mb-6'>Create an Account</h1>
+                <h1 className='font-secondary text-[36px] font-medium leading-7.5 mb-6'>Log in to Exclusive</h1>
                 <p className='font-primary text-lg leading-6'>Enter your details below</p>
                 <div className='mt-12'>
-                    <div>
-                        <input
-                            onChange={handleName}
-                            className='w-[370px] border-b-2 py-2 focus:outline-0'
-                            type="text"
-                            placeholder='Name' />
-                        <p className='text-primary'>{nameError}</p>
-                    </div>
                     <div className='my-10'>
                         <input
                             onChange={handleEmail}
@@ -160,18 +116,19 @@ const Signup = () => {
                         <p className='text-primary'>{passwordError}</p>
                     </div>
                     <div className='w-[370px] bg-primary rounded mt-10 mb-4'>
-                        <button onClick={handleCreateAccaount} className='py-[16px] px-[121px] font-primary font-medium leading-6 text-white'>Create Account</button>
+                        <button onClick={handleCreateAccaount} className='py-[16px] px-[158px] font-primary font-medium leading-6 text-white'>Login</button>
                     </div>
-                    <div onClick={handleGoogleSignUp} className='w-[370px] flex py-[16px] px-[70px]  border-2 bg-transparent rounded mb-8'>
+                    <div className='w-[370px] flex py-[16px] px-[70px]  border-2 bg-transparent rounded mb-8'>
                         <img src={gicon} alt="" />
-                        <button className='font-primary font-medium leading-6 text-red-500 ml-4'>Sign up with Google</button>
+                        <button className='font-primary font-medium leading-6 text-red-500 ml-4'>Log in with Google</button>
                     </div>
-                    <p className='ml-[40px] font-primary text-lg leading-6'>Already have an account? <Link
-                        to='/login' className='text-primary font-semibold underline cursor-pointer ml-2'>Log in</Link></p>
+                    <Link to='/forgotPassword' className='text-primary text-center font-semibold underline cursor-pointer ml-30'>
+                        Forgot Password?
+                    </Link>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Signup
+export default Login
