@@ -25,12 +25,64 @@ const ProductRightPart = () => {
 
     const data = [...Array(totalPages).keys()].map((index) => index + 1);
 
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    const handleSearch = (e) => {
+        let arr = []
+        if (e.target.value.length == 0) {
+            setFilteredProducts([]);
+        } else {
+            productData.map((product) => {
+                if (product.title.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    arr.push(product);
+                    setFilteredProducts(arr);
+                }
+
+            })
+        }
+
+    }
+
     return (
         <div>
+            <input onChange={handleSearch} className='border py-1 w-[500px] px-2 rounded-lg' type="text" placeholder='Search' />
             <div className='flex flex-wrap gap-x-8'>
                 {
+                    filteredProducts.length > 0 
+                    ? 
+                    filteredProducts.map((product) => (
+                        <Link to={`/product/${product.id}`} className='flex justify-between'>
+                            <div className='relative w-[270px] mt-5 mb-10'>
+                                <div className='absolute top-1 right-1 z-20'>
+                                    <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
+                                        <CiHeart size={20} />
+                                    </div>
+                                    <div className='mt-2 h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
+                                        <IoEyeOutline size={20} />
+                                    </div>
+                                </div>
+                                <div className='relative group bg-[#F5F5F5] py-[52px] px-[65px] rounded'>
+                                    <img src={product.thumbnail} alt="" />
+                                    <div className='absolute bottom-0 left-0 w-full hidden group-hover:block'>
+                                        <p className='font-primary font-medium leading-6 text-white bg-black py-2 text-center'>Add To Cart</p>
+                                    </div>
+                                </div>
+
+                                <div className='mt-2'>
+                                    <p className='font-primary font-medium leading-6'>{product.title}</p>
+                                    <p className='font-primary font-medium py-2 text-[#DB4444]'>${product.price}</p>
+                                    <div className='flex items-center'>
+                                        <ProductRating rating={product.rating} />
+                                        <p className='font-primary font-medium text-[#808080] ml-1'>({product.reviews.length})</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </Link>
+                    ))
+                    :
                     currentProducts.map((product) => (
-                        <Link to ={`/product/${product.id}`} className='flex justify-between'>
+                        <Link to={`/product/${product.id}`} className='flex justify-between'>
                             <div className='relative w-[270px] mt-5 mb-10'>
                                 <div className='absolute top-1 right-1 z-20'>
                                     <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
