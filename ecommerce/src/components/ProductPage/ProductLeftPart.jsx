@@ -1,42 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 const ProductLeftPart = () => {
-    const categoriesData = [
-        {
-            name: 'Woman’s Fashion',
-        },
-        {
-            name: 'Men’s Fashion',
-        },
-        {
-            name: 'Electronics',
-        },
-        {
-            name: 'Home & Lifestyle',
-        },
-        {
-            name: 'Medicine',
-        },
-        {
-            name: 'Sports & Outdoor',
-        },
-        {
-            name: 'Baby’s & Toys',
-        },
-        {
-            name: 'Groceries & Pets',
-        },
-        {
-            name: 'Health & Beauty',
-        }
-    ]
+    const [productData, setProductData] = useState([]);
+
+    useEffect(() => {
+        fetch("https://dummyjson.com/products")
+            .then((res) => res.json())
+            .then((data) => setProductData(data.products))
+    }, [])
+
+    const categoriesProduct = productData.map((product) => product.category);
+    const uniqueCategories = [...new Set(categoriesProduct)];
+
     return (
         <div>
             <h2 className='font-primary font-bold text-xl text-[#262626]'>Shop by Category</h2>
             <div className='mt-4 mb-10'>
                 {
-                    categoriesData.map((category) => (
-                        <p className='font-primary mb-4'>{category.name}</p>
+                    uniqueCategories.map((category) => (
+                        <Link to={`/product/${category}`} key={category}>
+                            <p className='font-primary mb-4 cursor-pointer uppercase'>{category}</p>
+                        </Link>
                     ))
                 }
             </div>
