@@ -61,6 +61,9 @@ const Login = () => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     toast.success("Successfully Logged in!");
+                    navigate("/");
+                    setEmail("");
+                    setPassword("");
 
                 })
                 .catch((error) => {

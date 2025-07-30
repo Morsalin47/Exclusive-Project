@@ -76,6 +76,9 @@ const Signup = () => {
                     sendEmailVerification(auth.currentUser)
 
                     toast.success("Account successfully created!");
+                    setName("");
+                    setEmail("");
+                    setPassword("");
 
                     setTimeout(() => {
                         navigate('/login');
@@ -134,6 +137,7 @@ const Signup = () => {
                 <div className='mt-12'>
                     <div>
                         <input
+                            value={name}
                             onChange={handleName}
                             className='w-[370px] border-b-2 py-2 focus:outline-0'
                             type="text"
@@ -142,6 +146,7 @@ const Signup = () => {
                     </div>
                     <div className='my-10'>
                         <input
+                            value={email}
                             onChange={handleEmail}
                             className='w-[370px] border-b-2 py-2 focus:outline-0'
                             type="email"
@@ -150,6 +155,7 @@ const Signup = () => {
                     </div>
                     <div>
                         <input
+                            value={password}
                             onChange={handlePassword}
                             className='w-[370px] border-b-2 py-2 focus:outline-0 mb-2'
                             type={show ? "text" : "password"}
