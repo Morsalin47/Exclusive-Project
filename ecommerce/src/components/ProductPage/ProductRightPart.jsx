@@ -1,3 +1,136 @@
+// import React, { useEffect, useState } from 'react'
+// import { CiHeart } from "react-icons/ci";
+// import { IoEyeOutline } from "react-icons/io5";
+// import ProductRating from './ProductRating';
+// import { Link } from 'react-router';
+
+// const ProductRightPart = () => {
+
+//     const [productData, setProductData] = useState([]);
+//     const [currentPage, setCurrentPage] = useState(1);
+//     const productPerPage = 6;
+
+//     useEffect(() => {
+//         fetch("https://dummyjson.com/products")
+//             .then((res) => res.json())
+//             .then((data) => setProductData(data.products))
+//     }, [])
+
+//     const totalProducts = productData.length;
+//     const totalPages = Math.ceil(totalProducts / productPerPage);
+//     const indexOfLastProduct = currentPage * productPerPage;
+//     const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+
+//     const currentProducts = productData.slice(indexOfFirstProduct, indexOfLastProduct);
+
+//     const data = [...Array(totalPages).keys()].map((index) => index + 1);
+
+//     const [filteredProducts, setFilteredProducts] = useState([]);
+
+//     const handleSearch = (e) => {
+//         let arr = []
+//         if (e.target.value.length == 0) {
+//             setFilteredProducts([]);
+//         } else {
+//             productData.map((product) => {
+//                 if (product.title.toLowerCase().includes(e.target.value.toLowerCase())) {
+//                     arr.push(product);
+//                     setFilteredProducts(arr);
+//                 }
+
+//             })
+//         }
+
+//     }
+
+//     return (
+//         <div>
+//             <input onChange={handleSearch} className='border py-1 w-[500px] px-2 rounded-lg' type="text" placeholder='Search' />
+//             <div className='flex flex-wrap gap-x-8'>
+//                 {
+//                     filteredProducts.length > 0 
+//                     ? 
+//                     filteredProducts.map((product) => (
+//                         <Link to={`/product/${product.id}`} className='flex justify-between'>
+//                             <div className='relative w-[270px] mt-5 mb-10'>
+//                                 <div className='absolute top-1 right-1 z-20'>
+//                                     <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
+//                                         <CiHeart size={20} />
+//                                     </div>
+//                                     <div className='mt-2 h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
+//                                         <IoEyeOutline size={20} />
+//                                     </div>
+//                                 </div>
+//                                 <div className='relative group bg-[#F5F5F5] py-[52px] px-[65px] rounded'>
+//                                     <img src={product.thumbnail} alt="" />
+//                                     <div className='absolute bottom-0 left-0 w-full hidden group-hover:block'>
+//                                         <p className='font-primary font-medium leading-6 text-white bg-black py-2 text-center'>Add To Cart</p>
+//                                     </div>
+//                                 </div>
+
+//                                 <div className='mt-2'>
+//                                     <p className='font-primary font-medium leading-6'>{product.title}</p>
+//                                     <p className='font-primary font-medium py-2 text-[#DB4444]'>${product.price}</p>
+//                                     <div className='flex items-center'>
+//                                         <ProductRating rating={product.rating} />
+//                                         <p className='font-primary font-medium text-[#808080] ml-1'>({product.reviews.length})</p>
+//                                     </div>
+//                                 </div>
+//                             </div>
+
+//                         </Link>
+//                     ))
+//                     :
+//                     currentProducts.map((product) => (
+//                         <Link to={`/product/${product.id}`} className='flex justify-between'>
+//                             <div className='relative w-[270px] mt-5 mb-10'>
+//                                 <div className='absolute top-1 right-1 z-20'>
+//                                     <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
+//                                         <CiHeart size={20} />
+//                                     </div>
+//                                     <div className='mt-2 h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
+//                                         <IoEyeOutline size={20} />
+//                                     </div>
+//                                 </div>
+//                                 <div className='relative group bg-[#F5F5F5] py-[52px] px-[65px] rounded'>
+//                                     <img src={product.thumbnail} alt="" />
+//                                     <div className='absolute bottom-0 left-0 w-full hidden group-hover:block'>
+//                                         <p className='font-primary font-medium leading-6 text-white bg-black py-2 text-center'>Add To Cart</p>
+//                                     </div>
+//                                 </div>
+
+//                                 <div className='mt-2'>
+//                                     <p className='font-primary font-medium leading-6'>{product.title}</p>
+//                                     <p className='font-primary font-medium py-2 text-[#DB4444]'>${product.price}</p>
+//                                     <div className='flex items-center'>
+//                                         <ProductRating rating={product.rating} />
+//                                         <p className='font-primary font-medium text-[#808080] ml-1'>({product.reviews.length})</p>
+//                                     </div>
+//                                 </div>
+//                             </div>
+
+//                         </Link>
+//                     ))
+//                 }
+
+//                 {filteredProducts.length === 0 && (
+//                     <div className='flex gap-4 cursor-pointer'>
+//                     {
+//                         data.map((item) => (
+//                             <div className={`px-4 py-2 rounded ${currentPage === item ? "bg-black text-white" : "bg-gray-400 text-black"}`} onClick={() => setCurrentPage(item)}>
+//                                 {item}
+//                             </div>
+//                         ))
+//                     }
+//                 </div>
+//                 )}
+
+//             </div>
+//         </div>
+//     )
+// }
+
+// export default ProductRightPart
 import React, { useEffect, useState } from 'react'
 import { CiHeart } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
@@ -8,6 +141,7 @@ const ProductRightPart = () => {
 
     const [productData, setProductData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchCurrentPage, setSearchCurrentPage] = useState(1);
     const productPerPage = 6;
 
     useEffect(() => {
@@ -31,27 +165,49 @@ const ProductRightPart = () => {
         let arr = []
         if (e.target.value.length == 0) {
             setFilteredProducts([]);
+            setSearchCurrentPage(1); // Reset search pagination
         } else {
             productData.map((product) => {
                 if (product.title.toLowerCase().includes(e.target.value.toLowerCase())) {
                     arr.push(product);
-                    setFilteredProducts(arr);
                 }
-
             })
+            setFilteredProducts(arr);
+            setSearchCurrentPage(1); // Reset to first page when new search
         }
-
     }
+
+    // Calculate pagination for search results
+    const totalSearchProducts = filteredProducts.length;
+    const totalSearchPages = Math.ceil(totalSearchProducts / productPerPage);
+    const searchIndexOfLastProduct = searchCurrentPage * productPerPage;
+    const searchIndexOfFirstProduct = searchIndexOfLastProduct - productPerPage;
+    const currentSearchProducts = filteredProducts.slice(searchIndexOfFirstProduct, searchIndexOfLastProduct);
+    const searchPaginationData = [...Array(totalSearchPages).keys()].map((index) => index + 1);
+
+    // Determine which products to display and whether to show pagination
+    const isSearching = filteredProducts.length > 0;
+    const productsToDisplay = isSearching
+        ? (filteredProducts.length > productPerPage ? currentSearchProducts : filteredProducts)
+        : currentProducts;
+
+    const showPagination = isSearching
+        ? filteredProducts.length > productPerPage
+        : totalProducts > productPerPage;
+
+    const currentActivePage = isSearching ? searchCurrentPage : currentPage;
+    const paginationData = isSearching ? searchPaginationData : data;
+    const handlePageChange = isSearching
+        ? (page) => setSearchCurrentPage(page)
+        : (page) => setCurrentPage(page);
 
     return (
         <div>
             <input onChange={handleSearch} className='border py-1 w-[500px] px-2 rounded-lg' type="text" placeholder='Search' />
             <div className='flex flex-wrap gap-x-8'>
                 {
-                    filteredProducts.length > 0 
-                    ? 
-                    filteredProducts.map((product) => (
-                        <Link to={`/product/${product.id}`} className='flex justify-between'>
+                    productsToDisplay.map((product) => (
+                        <Link key={product.id} to={`/product/${product.id}`} className='flex justify-between'>
                             <div className='relative w-[270px] mt-5 mb-10'>
                                 <div className='absolute top-1 right-1 z-20'>
                                     <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
@@ -77,51 +233,25 @@ const ProductRightPart = () => {
                                     </div>
                                 </div>
                             </div>
-
-                        </Link>
-                    ))
-                    :
-                    currentProducts.map((product) => (
-                        <Link to={`/product/${product.id}`} className='flex justify-between'>
-                            <div className='relative w-[270px] mt-5 mb-10'>
-                                <div className='absolute top-1 right-1 z-20'>
-                                    <div className='h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
-                                        <CiHeart size={20} />
-                                    </div>
-                                    <div className='mt-2 h-[34px] w-[34px] rounded-full bg-white flex items-center justify-center'>
-                                        <IoEyeOutline size={20} />
-                                    </div>
-                                </div>
-                                <div className='relative group bg-[#F5F5F5] py-[52px] px-[65px] rounded'>
-                                    <img src={product.thumbnail} alt="" />
-                                    <div className='absolute bottom-0 left-0 w-full hidden group-hover:block'>
-                                        <p className='font-primary font-medium leading-6 text-white bg-black py-2 text-center'>Add To Cart</p>
-                                    </div>
-                                </div>
-
-                                <div className='mt-2'>
-                                    <p className='font-primary font-medium leading-6'>{product.title}</p>
-                                    <p className='font-primary font-medium py-2 text-[#DB4444]'>${product.price}</p>
-                                    <div className='flex items-center'>
-                                        <ProductRating rating={product.rating} />
-                                        <p className='font-primary font-medium text-[#808080] ml-1'>({product.reviews.length})</p>
-                                    </div>
-                                </div>
-                            </div>
-
                         </Link>
                     ))
                 }
 
-                <div className='flex gap-4 cursor-pointer'>
-                    {
-                        data.map((item) => (
-                            <div className={`px-4 py-2 rounded ${currentPage === item ? "bg-black text-white" : "bg-gray-400 text-black"}`} onClick={() => setCurrentPage(item)}>
-                                {item}
-                            </div>
-                        ))
-                    }
-                </div>
+                {showPagination && (
+                    <div className='flex gap-4 cursor-pointer'>
+                        {
+                            paginationData.map((item) => (
+                                <div
+                                    key={item}
+                                    className={`px-4 py-2 rounded ${currentActivePage === item ? "bg-black text-white" : "bg-gray-400 text-black"}`}
+                                    onClick={() => handlePageChange(item)}
+                                >
+                                    {item}
+                                </div>
+                            ))
+                        }
+                    </div>
+                )}
             </div>
         </div>
     )
